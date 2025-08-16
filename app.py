@@ -5,7 +5,7 @@ import joblib
 
 # 页面标题
 st.set_page_config(page_title="脊柱感染预测模型演示", layout="wide")
-st.title("🌟 Random Forest 脊柱感染预测模型演示")
+st.title("🌟 Random forest model for predicting infectious spondylitis")
 
 # 加载模型与 scaler
 model = joblib.load("RF_model.pkl")
@@ -22,7 +22,7 @@ quantitative_cols = ['involved/normal', 'ESR', 'CRP', 'A/G', 'WBC', 'L%',
                      'Time elapsed to diagnosis of spondylodiscitis (m)', 'Height(m)']
 
 # 输入界面
-st.subheader("📝 请输入特征值")
+st.subheader("📝 Please input the characteristic value.")
 with st.form("input_form"):
     col1, col2 = st.columns(2)
     input_data = {}
@@ -51,7 +51,7 @@ if submitted:
         prediction = model.predict(input_combined)[0]
         prediction_proba = model.predict_proba(input_combined)[0]
 
-        label_mapping = {0: "Group 1", 1: "Group 2", 2: "Group 3", 3: "Group 4"}
+        label_mapping = {0: "1 = Pyogenic spondylitis", 1: "2 = Tuberculous spondylitis", 2: "3 = Brucellar spondylitis", 3: "4 = Fungal spondylitis"}
         st.success(f"✅ 模型预测结果：{label_mapping.get(prediction, prediction)}")
 
         st.subheader("📊 四个组别预测概率：")
