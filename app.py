@@ -20,7 +20,7 @@ categorical_cols = ['Thoracic(Involved=1/Not involved=0)', 'Lumbar and Sacrum(In
 
 # 定量特征列名 (Involved=1/Not involved=0)
 quantitative_cols = ['involved/normal(Signal ratio between infected vertebrae and normal vertebrae in T2WI)', 'ESR(mm/H)', 'CRP(mg/L)', 'A/G', 'WBC(10⁹/L)', 'L%',
-                     'Time elapsed to diagnosis of spondylodiscitis (months)', "The patient's height(m)"]
+                     'Time elapsed to diagnosis of spondylodiscitis(months)', "The patient's height(m)"]
 
 # 输入界面
 st.subheader("📝 Please input the characteristic value.")
