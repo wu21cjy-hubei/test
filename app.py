@@ -77,7 +77,10 @@ if submitted:
     else:
         input_df_scaled = scaler.transform(input_df_renamed[scaler.feature_names_in_])
         input_combined = pd.DataFrame(input_df_scaled, columns=scaler.feature_names_in_)
-        input_combined = pd.concat([input_combined, input_df_renamed[categorical_cols].reset_index(drop=True)], axis=1)
+        
+        # 获取重命名后的定性特征列名
+        categorical_cols_renamed = [column_mapping.get(col, col) for col in categorical_cols]
+        input_combined = pd.concat([input_combined, input_df_renamed[categorical_cols_renamed].reset_index(drop=True)], axis=1)
 
         prediction = model.predict(input_combined)[0]
         prediction_proba = model.predict_proba(input_combined)[0]
