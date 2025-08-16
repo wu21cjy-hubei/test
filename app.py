@@ -13,7 +13,7 @@ scaler = joblib.load("scaler.pkl")
 
 # 定性与定量特征列名
 categorical_cols = ['Thoracic(Involved=1/Not involved=0)', 'Lumbar and Sacrum(Involved=1/Not involved=0)', 'Number of vertebrae involved(≤2 infectious vertebrae = 0; >2 infectious vertebrae = 1)',
-                    'Extent of vertebral destruction', 'Vertebral intraosseous abscess(Involved=1/Not involved=0)',
+                    'Extent of vertebral destruction(0 = No height loss, intact endplate；1 = Endplate damaged, height loss <25%；2 = Severe damage, height loss ≥25%)', 'Vertebral intraosseous abscess(Involved=1/Not involved=0)',
                     'Degree of disk destruction(0 = no height loss；1 = height loss <50%；2 = height loss >50%)', 'Subligamentous spread(Involved=1/Not involved=0)', 'Skip lesion(Involved=1/Not involved=0)',
                     'Endplate inflammatory reaction line(Involved=1/Not involved=0)', 'Paravertebral abscess(0 = absent；1 = small (<½ vertebral body diameter)；2 = large (≥½ vertebral body diameter))',
                     'Neurological symptom(Involved=1/Not involved=0)', 'Fever(Involved=1/Not involved=0)']
@@ -35,7 +35,7 @@ with st.form("input_form"):
     with col2:
         for col in categorical_cols:
             options = [0, 1, 2] if col in [
-            'Extent of vertebral destruction', 
+            'Extent of vertebral destruction(0 = No height loss, intact endplate；1 = Endplate damaged, height loss <25%；2 = Severe damage, height loss ≥25%)', 
             'Degree of disk destruction(0 = no height loss；1 = height loss <50%；2 = height loss >50%)',
             'Paravertebral abscess(0 = absent；1 = small (<½ vertebral body diameter)；2 = large (≥½ vertebral body diameter))'] else [0, 1]
             input_data[col] = st.selectbox(col, options=options)
@@ -57,7 +57,7 @@ if submitted:
         'Thoracic(Involved=1/Not involved=0)': 'Thoracic',
         'Lumbar and Sacrum(Involved=1/Not involved=0)': 'Lumbar and Sacrum',
         'Number of vertebrae involved(≤2 infectious vertebrae = 0; >2 infectious vertebrae = 1)': 'Number of vertebrae involved',
-        'Extent of vertebral destruction(0 = no vertebral destruction；1 = vertebral destruction)': 'Extent of vertebral destruction',
+        'Extent of vertebral destruction(0 = No height loss, intact endplate；1 = Endplate damaged, height loss <25%；2 = Severe damage, height loss ≥25%)': 'Extent of vertebral destruction',
         'Vertebral intraosseous abscess(Involved=1/Not involved=0)': 'Vertebral intraosseous abscess',
         'Degree of disk destruction(0 = no height loss；1 = height loss <50%；2 = height loss >50%)': 'Degree of disk destruction',
         'Subligamentous spread(Involved=1/Not involved=0)': 'Subligamentous spread',
