@@ -19,7 +19,7 @@ categorical_cols = ['Thoracic', 'Lumbar and Sacrum', 'Number of vertebrae involv
                     'Neurological symptom', 'Fever']
 
 quantitative_cols = ['involved/normal(Involved=1/Not involved=0)', 'ESR', 'CRP', 'A/G', 'WBC(10⁹/L)', 'L%',
-                     'Time elapsed to diagnosis of spondylodiscitis (months)', 'The patient's height(m)']
+                     'Time elapsed to diagnosis of spondylodiscitis (months)', "The patient's height(m)"]
 
 # 输入界面
 st.subheader("📝 Please input the characteristic value.")
