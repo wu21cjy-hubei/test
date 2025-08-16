@@ -38,7 +38,7 @@ with st.form("input_form"):
             options = [0, 1, 2] if col in ['Extent of vertebral destruction', 'Degree of disk destruction(0 = no height loss；1 = height loss <50%；2 = height loss >50%)', 'Paravertebral abscess(0 = absent；1 = small (<½ vertebral body diameter)；2 = large (≥½ vertebral body diameter))'] else [0, 1]
             input_data[col] = st.selectbox(col, options=options)
 
-    submitted = st.form_submit_button("🚀 开始预测")
+    submitted = st.form_submit_button("🚀 Start predicting")
 
 if submitted:
     input_df = pd.DataFrame([input_data])
@@ -68,9 +68,9 @@ if submitted:
         prediction_proba = model.predict_proba(input_combined)[0]
 
         label_mapping = {0: "1 = Pyogenic spondylitis", 1: "2 = Tuberculous spondylitis", 2: "3 = Brucellar spondylitis", 3: "4 = Fungal spondylitis"}
-        st.success(f"✅ 模型预测结果：{label_mapping.get(prediction, prediction)}")
+        st.success(f"✅ model prediction results：{label_mapping.get(prediction, prediction)}")
 
-        st.subheader("📊 四个组别预测概率：")
+        st.subheader("📊 Predicted probability for four groups：")
         for i, prob in enumerate(prediction_proba):
             percentage = prob * 100
             st.write(f"{label_mapping.get(i)}: {percentage:.1f}%")
