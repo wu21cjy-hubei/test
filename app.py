@@ -46,6 +46,7 @@ if submitted:
     # 创建列名映射：界面显示名称 -> scaler期望名称
     column_mapping = {
         'involved/normal(Signal ratio between infected vertebrae and normal vertebrae in T2WI)': 'involved/normal',
+        'ESR(mm/H)': 'ESR',
         'CRP(mg/L)': 'CRP',
         'WBC(10⁹/L)': 'WBC',
         'Time elapsed to diagnosis of spondylodiscitis (months)': 'Time elapsed to diagnosis of spondylodiscitis (m)',
