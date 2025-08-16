@@ -51,7 +51,7 @@ if submitted:
         'ESR(mm/H)': 'ESR',
         'CRP(mg/L)': 'CRP',
         'WBC(10⁹/L)': 'WBC',
-        'Time elapsed to diagnosis of spondylodiscitis (months)': 'Time elapsed to diagnosis of spondylodiscitis (m)',
+        'Time elapsed to diagnosis of spondylodiscitis(months)': 'Time elapsed to diagnosis of spondylodiscitis (m)',
         "The patient's height(m)": 'Height(m)',
         # 定性特征映射
         'Thoracic(Involved=1/Not involved=0)': 'Thoracic',
