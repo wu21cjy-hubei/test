@@ -13,13 +13,13 @@ scaler = joblib.load("scaler.pkl")
 
 # 定性与定量特征列名
 categorical_cols = ['Thoracic', 'Lumbar and Sacrum', 'Number of vertebrae involved',
-                    'Extent of vertebral destruction', 'Vertebral intraosseous abscess',
+                    'Extent of vertebral destruction', 'Vertebral intraosseous abscess(≤2 infectious vertebrae = 0; >2 infectious vertebrae = 1)',
                     'Degree of disk destruction', 'Subligamentous spread', 'Skip lesion',
                     'Endplate inflammatory reaction line', 'Paravertebral abscess',
                     'Neurological symptom', 'Fever']
 
-quantitative_cols = ['involved/normal', 'ESR', 'CRP', 'A/G', 'WBC', 'L%',
-                     'Time elapsed to diagnosis of spondylodiscitis (m)', 'Height(m)']
+quantitative_cols = ['involved/normal(Involved=1/Not involved=0)', 'ESR', 'CRP', 'A/G', 'WBC(10⁹/L)', 'L%',
+                     'Time elapsed to diagnosis of spondylodiscitis (months)', 'The patient's height(m)']
 
 # 输入界面
 st.subheader("📝 Please input the characteristic value.")
@@ -56,4 +56,5 @@ if submitted:
 
         st.subheader("📊 四个组别预测概率：")
         for i, prob in enumerate(prediction_proba):
-            st.write(f"{label_mapping.get(i)}: {prob:.3f}")
+            percentage = prob * 100
+            st.write(f"{label_mapping.get(i)}: {percentage:.1f}%")
