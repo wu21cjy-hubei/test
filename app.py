@@ -13,7 +13,7 @@ scaler = joblib.load("scaler.pkl")
 
 # 定性与定量特征列名
 categorical_cols = ['Thoracic(Involved=1/Not involved=0)', 'Lumbar and Sacrum(Involved=1/Not involved=0)', 'Number of vertebrae involved(≤2 infectious vertebrae = 0; >2 infectious vertebrae = 1)',
-                    'Extent of vertebral destruction(0 = no vertebral destruction；1 = vertebral destruction)', 'Vertebral intraosseous abscess(Involved=1/Not involved=0)',
+                    'Extent of vertebral destruction', 'Vertebral intraosseous abscess(Involved=1/Not involved=0)',
                     'Degree of disk destruction(0 = no height loss；1 = height loss <50%；2 = height loss >50%)', 'Subligamentous spread(Involved=1/Not involved=0)', 'Skip lesion(Involved=1/Not involved=0)',
                     'Endplate inflammatory reaction line(Involved=1/Not involved=0)', 'Paravertebral abscess(0 = absent；1 = small (<½ vertebral body diameter)；2 = large (≥½ vertebral body diameter))',
                     'Neurological symptom(Involved=1/Not involved=0)', 'Fever(Involved=1/Not involved=0)']
