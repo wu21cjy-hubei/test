@@ -12,17 +12,19 @@ model = joblib.load("RF_model.pkl")
 scaler = joblib.load("scaler.pkl")
 
 # 定性与定量特征列名
-categorical_cols = ['Thoracic', 'Lumbar and Sacrum', 'Number of vertebrae involved',
-                    'Extent of vertebral destruction', 'Vertebral intraosseous abscess(≤2 infectious vertebrae = 0; >2 infectious vertebrae = 1)',
+categorical_cols = ['Thoracic', 'Lumbar and Sacrum', 'Number of vertebrae involved(≤2 infectious vertebrae = 0; >2 infectious vertebrae = 1)',
+                    'Extent of vertebral destruction', 'Vertebral intraosseous abscess',
                     'Degree of disk destruction', 'Subligamentous spread', 'Skip lesion',
                     'Endplate inflammatory reaction line', 'Paravertebral abscess',
                     'Neurological symptom', 'Fever']
 
-quantitative_cols = ['involved/normal(Involved=1/Not involved=0)', 'ESR', 'CRP', 'A/G', 'WBC(10⁹/L)', 'L%',
+# 定量特征列名 (Involved=1/Not involved=0)
+quantitative_cols = ['involved/normal(Signal ratio between infected vertebrae and normal vertebrae in T2WI)', 'ESR', 'CRP(mg/L)', 'A/G', 'WBC(10⁹/L)', 'L%',
                      'Time elapsed to diagnosis of spondylodiscitis (months)', "The patient's height(m)"]
 
 # 输入界面
 st.subheader("📝 Please input the characteristic value.")
+st.info("💡 定量特征说明：Involved=1/Not involved=0")
 with st.form("input_form"):
     col1, col2 = st.columns(2)
     input_data = {}
