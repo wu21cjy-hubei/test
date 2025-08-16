@@ -35,7 +35,7 @@ with st.form("input_form"):
 
     with col2:
         for col in categorical_cols:
-            options = [0, 1, 2] if col in ['Extent of vertebral destruction', 'Degree of disk destruction', 'Paravertebral abscess'] else [0, 1]
+            options = [0, 1, 2] if col in ['Extent of vertebral destruction', 'Degree of disk destruction(0 = no height loss；1 = height loss <50%；2 = height loss >50%)', 'Paravertebral abscess(0 = absent；1 = small (<½ vertebral body diameter)；2 = large (≥½ vertebral body diameter))'] else [0, 1]
             input_data[col] = st.selectbox(col, options=options)
 
     submitted = st.form_submit_button("🚀 开始预测")
