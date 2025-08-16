@@ -24,7 +24,7 @@ quantitative_cols = ['involved/normal(Signal ratio between infected vertebrae an
 
 # 输入界面
 st.subheader("📝 Please input the characteristic value.")
-st.info("💡 定量特征说明：Involved=1/Not involved=0")
+st.info("💡 Quantitative Feature Description：Involved=1/Not involved=0")
 with st.form("input_form"):
     col1, col2 = st.columns(2)
     input_data = {}
@@ -42,13 +42,26 @@ with st.form("input_form"):
 
 if submitted:
     input_df = pd.DataFrame([input_data])
-    missing_cols = [col for col in scaler.feature_names_in_ if col not in input_df.columns]
+    
+    # 创建列名映射：界面显示名称 -> scaler期望名称
+    column_mapping = {
+        'involved/normal(Signal ratio between infected vertebrae and normal vertebrae in T2WI)': 'involved/normal',
+        'CRP(mg/L)': 'CRP',
+        'WBC(10⁹/L)': 'WBC',
+        'Time elapsed to diagnosis of spondylodiscitis (months)': 'Time elapsed to diagnosis of spondylodiscitis (m)',
+        "The patient's height(m)": 'Height(m)'
+    }
+    
+    # 重命名列以匹配scaler期望的名称
+    input_df_renamed = input_df.rename(columns=column_mapping)
+    
+    missing_cols = [col for col in scaler.feature_names_in_ if col not in input_df_renamed.columns]
     if missing_cols:
         st.error(f"❌ 缺少特征列：{missing_cols}，请检查列名是否与 scaler 拟合时一致。")
     else:
-        input_df_scaled = scaler.transform(input_df[scaler.feature_names_in_])
+        input_df_scaled = scaler.transform(input_df_renamed[scaler.feature_names_in_])
         input_combined = pd.DataFrame(input_df_scaled, columns=scaler.feature_names_in_)
-        input_combined = pd.concat([input_combined, input_df[categorical_cols].reset_index(drop=True)], axis=1)
+        input_combined = pd.concat([input_combined, input_df_renamed[categorical_cols].reset_index(drop=True)], axis=1)
 
         prediction = model.predict(input_combined)[0]
         prediction_proba = model.predict_proba(input_combined)[0]
