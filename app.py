@@ -12,11 +12,11 @@ model = joblib.load("RF_model.pkl")
 scaler = joblib.load("scaler.pkl")
 
 # 定性与定量特征列名
-categorical_cols = ['Thoracic', 'Lumbar and Sacrum', 'Number of vertebrae involved(≤2 infectious vertebrae = 0; >2 infectious vertebrae = 1)',
-                    'Extent of vertebral destruction', 'Vertebral intraosseous abscess',
-                    'Degree of disk destruction', 'Subligamentous spread', 'Skip lesion',
-                    'Endplate inflammatory reaction line', 'Paravertebral abscess',
-                    'Neurological symptom', 'Fever']
+categorical_cols = ['Thoracic(Involved=1/Not involved=0)', 'Lumbar and Sacrum(Involved=1/Not involved=0)', 'Number of vertebrae involved(≤2 infectious vertebrae = 0; >2 infectious vertebrae = 1)',
+                    'Extent of vertebral destruction(0 = no vertebral destruction；1 = vertebral destruction)', 'Vertebral intraosseous abscess(Involved=1/Not involved=0)',
+                    'Degree of disk destruction(0 = no height loss；1 = height loss <50%；2 = height loss >50%)', 'Subligamentous spread(Involved=1/Not involved=0)', 'Skip lesion(Involved=1/Not involved=0)',
+                    'Endplate inflammatory reaction line(Involved=1/Not involved=0)', 'Paravertebral abscess(0 = absent；1 = small (<½ vertebral body diameter)；2 = large (≥½ vertebral body diameter))',
+                    'Neurological symptom(Involved=1/Not involved=0)', 'Fever(Involved=1/Not involved=0)']
 
 # 定量特征列名 (Involved=1/Not involved=0)
 quantitative_cols = ['involved/normal(Signal ratio between infected vertebrae and normal vertebrae in T2WI)', 'ESR(mm/H)', 'CRP(mg/L)', 'A/G', 'WBC(10⁹/L)', 'L%',
@@ -24,7 +24,6 @@ quantitative_cols = ['involved/normal(Signal ratio between infected vertebrae an
 
 # 输入界面
 st.subheader("📝 Please input the characteristic value.")
-st.info("💡 Quantitative Feature Description：Involved=1/Not involved=0")
 with st.form("input_form"):
     col1, col2 = st.columns(2)
     input_data = {}
@@ -35,7 +34,10 @@ with st.form("input_form"):
 
     with col2:
         for col in categorical_cols:
-            options = [0, 1, 2] if col in ['Extent of vertebral destruction', 'Degree of disk destruction(0 = no height loss；1 = height loss <50%；2 = height loss >50%)', 'Paravertebral abscess(0 = absent；1 = small (<½ vertebral body diameter)；2 = large (≥½ vertebral body diameter))'] else [0, 1]
+            options = [0, 1, 2] if col in [
+            'Extent of vertebral destruction', 
+            'Degree of disk destruction(0 = no height loss；1 = height loss <50%；2 = height loss >50%)',
+            'Paravertebral abscess(0 = absent；1 = small (<½ vertebral body diameter)；2 = large (≥½ vertebral body diameter))'] else [0, 1]
             input_data[col] = st.selectbox(col, options=options)
 
     submitted = st.form_submit_button("🚀 Start predicting")
@@ -50,7 +52,20 @@ if submitted:
         'CRP(mg/L)': 'CRP',
         'WBC(10⁹/L)': 'WBC',
         'Time elapsed to diagnosis of spondylodiscitis (months)': 'Time elapsed to diagnosis of spondylodiscitis (m)',
-        "The patient's height(m)": 'Height(m)'
+        "The patient's height(m)": 'Height(m)',
+        # 定性特征映射
+        'Thoracic(Involved=1/Not involved=0)': 'Thoracic',
+        'Lumbar and Sacrum(Involved=1/Not involved=0)': 'Lumbar and Sacrum',
+        'Number of vertebrae involved(≤2 infectious vertebrae = 0; >2 infectious vertebrae = 1)': 'Number of vertebrae involved',
+        'Extent of vertebral destruction(0 = no vertebral destruction；1 = vertebral destruction)': 'Extent of vertebral destruction',
+        'Vertebral intraosseous abscess(Involved=1/Not involved=0)': 'Vertebral intraosseous abscess',
+        'Degree of disk destruction(0 = no height loss；1 = height loss <50%；2 = height loss >50%)': 'Degree of disk destruction',
+        'Subligamentous spread(Involved=1/Not involved=0)': 'Subligamentous spread',
+        'Skip lesion(Involved=1/Not involved=0)': 'Skip lesion',
+        'Endplate inflammatory reaction line(Involved=1/Not involved=0)': 'Endplate inflammatory reaction line',
+        'Paravertebral abscess(0 = absent；1 = small (<½ vertebral body diameter)；2 = large (≥½ vertebral body diameter))': 'Paravertebral abscess',
+        'Neurological symptom(Involved=1/Not involved=0)': 'Neurological symptom',
+        'Fever(Involved=1/Not involved=0)': 'Fever'
     }
     
     # 重命名列以匹配scaler期望的名称
