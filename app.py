@@ -89,6 +89,11 @@ if submitted:
     # 重命名列以匹配scaler期望的名称
     input_df_renamed = input_df.rename(columns=column_mapping)
     
+    # 特殊处理：Number of vertebrae involved字段的转换
+    # app页面输入0 -> scaler接收1，app页面输入1 -> scaler接收2
+    if 'Number of vertebrae involved' in input_df_renamed.columns:
+        input_df_renamed['Number of vertebrae involved'] = input_df_renamed['Number of vertebrae involved'].map({0: 1, 1: 2})
+    
     missing_cols = [col for col in scaler.feature_names_in_ if col not in input_df_renamed.columns]
     if missing_cols:
         st.error(f"❌ 缺少特征列：{missing_cols}，请检查列名是否与 scaler 拟合时一致。")
@@ -107,6 +112,7 @@ if submitted:
         st.success(f"✅ model prediction results：{label_mapping.get(prediction, prediction)}")
 
         st.subheader("📊 Predicted probability for four groups：")
+        st.info("💡 输出提供四个概率值，代表模型根据输入指标对四种感染性脊柱炎类型预测的概率。")
         for i, prob in enumerate(prediction_proba):
             percentage = prob * 100
             st.write(f"{label_mapping.get(i)}: {percentage:.1f}%")
