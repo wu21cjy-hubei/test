@@ -112,7 +112,7 @@ if submitted:
         st.success(f"✅ model prediction results：{label_mapping.get(prediction, prediction)}")
 
         st.subheader("📊 Predicted probability for four groups：")
-        st.info("💡 输出提供四个概率值，代表模型根据输入指标对四种感染性脊柱炎类型预测的概率。")
+        st.info("💡 Output shows predicted probabilities for all four spondylitis types.")
         for i, prob in enumerate(prediction_proba):
             percentage = prob * 100
             st.write(f"{label_mapping.get(i)}: {percentage:.1f}%")
